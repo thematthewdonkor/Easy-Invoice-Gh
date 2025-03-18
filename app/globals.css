@@ -1,12 +1,9 @@
+/* Second: Tailwind directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Urbanist" sans-serif;
-  background-color: var(--background);
-}
-
+/* Third: Layer and other CSS rules */
 @layer base {
   :root {
     --font-urbanist: "Urbanist", sans-serif;
@@ -95,8 +92,6 @@ body {
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -104,4 +99,10 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Body styles (should be outside of layers) */
+body {
+  font-family: "Urbanist", sans-serif;
+  background-color: var(--background);
 }

@@ -3,7 +3,7 @@ import { Urbanist } from "next/font/google";
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
-import { QueryProvider } from "@/components/QueryClientProvider";
+import { QueryProvider } from "@/components/query-provider";
 
 const urbanist = Urbanist({
   variable: "--font-urbanist",

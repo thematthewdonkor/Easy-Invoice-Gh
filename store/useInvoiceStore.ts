@@ -1,60 +1,20 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { NewInvoiceProps, InvoiceSchema } from "@/types";
+import {
+  validateAndFormatInvoice,
+  createNewInvoiceItem,
+} from "@/hooks/useCreateInvoiceDb";
+import { v4 as uuidv4 } from "uuid";
 
-interface InvoiceItem {
-  description: string;
-  quantity: number;
-  price: number;
-  amount: number;
-}
-
-interface SummaryData {
-  discount: number;
-  tax: number;
-  deliveryCost: number;
-  amountPaid: number;
-}
-
-interface InvoiceState {
-  // Invoice details
-  companyName: string;
-  companyLogo: string;
-  invoiceNumber: string;
-  customersName: string;
-  customersLocation: string;
-  date: string;
-  dueDate: string;
-  notes: string;
-  paymentDetails: string;
-
-  // Line items
-  items: InvoiceItem[];
-
-  // Summary data
-  summary: SummaryData;
-
-  // Calculated values
-  subtotal: number;
-
-  // Actions
-  setField: (field: string, value: string | number) => void;
-  updateLineItem: (
-    index: number,
-    field: string,
-    value: string | number
-  ) => void;
-  addItem: () => void;
-  updateSummary: (field: string, value: number) => void;
-  calculateSubtotal: () => number;
-}
-
-export const useInvoiceStore = create<InvoiceState>()(
+export const useInvoiceStore = create<NewInvoiceProps>()(
   persist(
     (set, get) => ({
-      // Invoice details
+      // Invoice details client part
+      companyLogo: "",
+      logo: false,
       companyName: "",
-      companyLogo: "/company-logo.jpg",
-      invoiceNumber: "108",
+      invoiceNumber: 0,
       customersName: "",
       customersLocation: "",
       date: "",
@@ -62,85 +22,213 @@ export const useInvoiceStore = create<InvoiceState>()(
       notes: "",
       paymentDetails: "",
 
-      // Line items
-      items: [{ description: "", quantity: 1, price: 0, amount: 0 }],
+      // Line items  client part
+      items: [
+        {
+          id: uuidv4(),
+          description: "",
+          quantity: 1,
+          price: 0,
+          amount: 0,
+        },
+      ],
 
-      // Summary data
+      // Summary data  client part
       summary: {
+        subtotal: 0,
         discount: 0,
-        tax: 0,
+        taxRate: 0,
         deliveryCost: 0,
+        total: 0,
+        balanceDue: 0,
         amountPaid: 0,
       },
 
-      // Calculated values
-      subtotal: 0,
+      createInvoice: async (
+        mutateAsyncFn: (
+          data: InvoiceSchema
+        ) => Promise<{ data: { id: string } }>
+      ) => {
+        try {
+          const invoiceData = validateAndFormatInvoice(get());
+          const response = await mutateAsyncFn(invoiceData);
+          if (!response?.data.id) {
+            throw new Error("Server failed to return invoice ID");
+          }
 
-      // Actions
-      setField: (field, value) => {
+          const newItem = createNewInvoiceItem();
+
+          // Reset the form after successful creation
+          set({
+            // companyLogo: "",
+            // companyName: "",
+            invoiceNumber: 0,
+            customersName: "",
+            customersLocation: "",
+            date: "",
+            dueDate: "",
+            // notes: "",
+            // paymentDetails: "",
+
+            // Line items  client part
+            items: [newItem],
+
+            // Summary data  client part
+            summary: {
+              subtotal: 0,
+              discount: 0,
+              taxRate: 0,
+              deliveryCost: 0,
+              total: 0,
+              balanceDue: 0,
+              amountPaid: 0,
+            },
+          });
+          console.log("Form reset complete. Items:", get().items);
+          return response.data.id;
+        } catch (error) {
+          console.error("Failed to create invoice:", error);
+          throw error; // Re-throw to allow error handling in components
+        }
+      },
+
+      //Actions
+      handleChange: (field, value) => {
         set({ [field]: value });
       },
 
-      updateLineItem: (index, field, value) => {
+      //Format currency
+
+      // Update line item
+      updateItem: (id, field, value) => {
         set((state) => {
-          const newItems = [...state.items];
-          newItems[index] = { ...newItems[index], [field]: value };
+          const newItems = state.items.map((item) => {
+            if (item.id === id) {
+              const updatedItem = { ...item, [field]: value };
 
-          // If quantity or price changed, recalculate amount
-          if (field === "quantity" || field === "price") {
-            newItems[index].amount =
-              newItems[index].quantity * newItems[index].price;
-          }
+              // Recalculate amount if quantity or price changes
+              if (field === "quantity" || field === "price") {
+                updatedItem.amount = updatedItem.quantity * updatedItem.price;
+              }
+              return updatedItem;
+            }
+            return item;
+          });
 
-          // Recalculate subtotal
-          const subtotal = newItems.reduce(
-            (sum, item) => sum + item.quantity * item.price,
-            0
-          );
+          // Recalculate summary values
+          const subtotal = newItems.reduce((sum, item) => sum + item.amount, 0);
+          const { discount, taxRate, deliveryCost, amountPaid } = state.summary;
+          const total = subtotal - discount + taxRate + deliveryCost;
+          const balanceDue = total - amountPaid;
 
-          return { items: newItems, subtotal };
+          return {
+            items: newItems,
+            summary: {
+              ...state.summary,
+              subtotal,
+              total,
+              balanceDue,
+            },
+          };
         });
       },
 
+      // Add new line item
+
       addItem: () => {
         set((state) => ({
-          items: [
-            ...state.items,
-            { description: "", quantity: 1, price: 0, amount: 0 },
-          ],
+          items: [...state.items, createNewInvoiceItem()],
         }));
       },
 
+      // Update summary fields
       updateSummary: (field, value) => {
-        set((state) => ({
-          summary: { ...state.summary, [field]: value },
-        }));
+        set((state) => {
+          const newSummary = { ...state.summary, [field]: value };
+
+          // Recalculate total and balance due
+          const { subtotal, discount, taxRate, deliveryCost, amountPaid } =
+            newSummary;
+          const total = subtotal - discount + taxRate + deliveryCost;
+          const balanceDue = total - amountPaid;
+
+          return {
+            summary: {
+              ...newSummary,
+              total,
+              balanceDue,
+            },
+          };
+        });
       },
 
+      // Calculate subtotal
       calculateSubtotal: () => {
         const { items } = get();
-        const subtotal = items.reduce(
-          (sum, item) => sum + item.quantity * item.price,
-          0
-        );
-        set({ subtotal });
+        const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
+
+        set((state) => {
+          const { discount, taxRate, deliveryCost, amountPaid } = state.summary;
+          const total = subtotal - discount + taxRate + deliveryCost;
+          const balanceDue = total - amountPaid;
+
+          return {
+            summary: {
+              ...state.summary,
+              subtotal,
+              total,
+              balanceDue,
+            },
+          };
+        });
+
         return subtotal;
+      },
+
+      // Remove line item
+      removeItem: (id) => {
+        set((state) => {
+          const newItems = state.items.filter((item) => item.id !== id);
+
+          // Prevent removing all items
+          if (newItems.length === 0) {
+            newItems.push({
+              id: uuidv4(),
+              description: "",
+              quantity: 1,
+              price: 0,
+              amount: 0,
+            });
+          }
+
+          // Recalculate summary values
+          const subtotal = newItems.reduce((sum, item) => sum + item.amount, 0);
+          const { discount, taxRate, deliveryCost, amountPaid } = state.summary;
+          const total = subtotal - discount + taxRate + deliveryCost;
+          const balanceDue = total - amountPaid;
+
+          return {
+            items: newItems,
+            summary: {
+              ...state.summary,
+              subtotal,
+              total,
+              balanceDue,
+            },
+          };
+        });
       },
     }),
     {
-      name: "invoice-store",
+      name: "invoice-persistence",
       partialize: (state) => ({
-        companyName: state.companyName,
-        companyLogo: state.companyLogo,
-        invoiceNumber: state.invoiceNumber,
-        customersName: state.customersName,
-        customersLocation: state.customersLocation,
-        date: state.date,
-        dueDate: state.dueDate,
-        notes: state.notes,
-        paymentDetails: state.paymentDetails,
-        items: state.items,
-        summary: state.summary,
+        ...state,
+        items: state.items.filter(
+          (item) =>
+            item.description.trim() !== "" ||
+            item.quantity > 0 ||
+            item.price > 0
+        ),
       }),
     }
   )
