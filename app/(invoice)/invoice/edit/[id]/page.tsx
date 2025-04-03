@@ -1,10 +1,11 @@
 import Edit from "../Edit";
 
-interface PageParams {
-  id: string;
-}
-
-const EditInvoicePage = async ({ params }: { params: PageParams }) => {
+const EditInvoicePage = async ({
+  params,
+}: {
+  params: { id: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) => {
   const { id } = params;
 
   return <Edit id={id} />;
