@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { useInvoiceStore } from "@/store/useInvoiceStore";
 import { formatCurrency } from "@/lib/utils";
 
-export const Summary = () => {
+export const EditSummary = () => {
   const {
     subtotal,
     discount,
@@ -16,6 +16,7 @@ export const Summary = () => {
     balanceDue,
     handleChange,
   } = useInvoiceStore();
+  console.log(discount, deliveryCost, amountPaid);
 
   return (
     <div className="space-y-4 border rounded-lg p-6">
@@ -29,7 +30,7 @@ export const Summary = () => {
         <div className="flex items-center gap-2">
           <span className="text-xs">GH¢</span>
           <Input
-            value={discount}
+            value={discount || ""}
             onChange={(e) => handleChange("discount", e.target.value)}
             className="w-24 text-xs"
           />
@@ -41,7 +42,7 @@ export const Summary = () => {
         <div className="flex items-center gap-2">
           <span className="text-xs">GH¢</span>
           <Input
-            value={deliveryCost}
+            value={deliveryCost || ""}
             onChange={(e) => handleChange("deliveryCost", e.target.value)}
             className="w-24 text-xs"
           />
@@ -58,7 +59,7 @@ export const Summary = () => {
         <div className="flex items-center gap-2">
           <span className="text-xs">GH¢</span>
           <Input
-            value={amountPaid}
+            value={amountPaid || ""}
             onChange={(e) => handleChange("amountPaid", e.target.value)}
             className="w-24 text-xs"
           />

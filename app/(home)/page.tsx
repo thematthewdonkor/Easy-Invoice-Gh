@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/nav-bar";
-import NewInvoice from "../(invoice)/invoice/new/page";
+import { NewInvoice } from "@/components/new-invoice";
 
 export default function Home() {
   return (

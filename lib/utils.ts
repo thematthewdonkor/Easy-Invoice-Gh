@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 //Format currency
-export const formatCurrency = (value: number | string) => {
+export const formatCurrency = (value?: number | string) => {
   return new Intl.NumberFormat("en-GH", {
     style: "currency",
     currency: "GHS",

@@ -1,18 +1,19 @@
 import type { Metadata } from "next";
-import { Urbanist } from "next/font/google";
+import { Roboto } from "next/font/google";
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { QueryProvider } from "@/components/query-provider";
+import { Toaster } from "react-hot-toast";
 
-const urbanist = Urbanist({
+const urbanist = Roboto({
   variable: "--font-urbanist",
   subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
+  weight: ["100", "300", "400", "500", "700", "900"],
 });
 
 export const metadata: Metadata = {
-  title: "Invoice app",
+  title: "Easy Invoice ",
   description: "Create invoice for free",
 };
 
@@ -22,12 +23,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <QueryProvider>
-      <ClerkProvider afterSignOutUrl="/">
-        <html lang="en">
-          <body className={`${urbanist.variable} font-sans`}>{children}</body>
-        </html>
-      </ClerkProvider>
-    </QueryProvider>
+    <html lang="en">
+      <body className={`${urbanist.variable} font-sans`}>
+        <Toaster />
+        <ClerkProvider afterSignOutUrl="/">
+          <QueryProvider>{children}</QueryProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

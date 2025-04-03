@@ -1,16 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { UploadDropzone } from "./uploadthing-provider";
+import { UploadDropzone } from "@/lib/uploadthing";
 import { useInvoiceStore } from "@/store/useInvoiceStore";
 import { Button } from "./ui/button";
 import { X } from "lucide-react";
 
-export const Logo = () => {
+export const UploadLogo = () => {
   const { handleChange, companyLogo } = useInvoiceStore();
 
   const handleLogoUpload = (url: string) => {
-    console.log("Upload URL", url);
     handleChange("companyLogo", url);
   };
 

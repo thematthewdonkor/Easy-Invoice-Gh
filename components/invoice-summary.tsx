@@ -1,10 +1,11 @@
+"use client";
+
 import { formatCurrency } from "@/lib/utils";
 import { SummaryProps } from "@/types";
 
 export const InvoiceSummary = ({
   subtotal,
   discount,
-  //   taxRate,
   total,
   deliveryCost,
   amountPaid,
@@ -17,41 +18,35 @@ export const InvoiceSummary = ({
         <span className="text-xs">{formatCurrency(subtotal)}</span>
       </div>
 
-      {discount ? (
+      {discount === " " ? (
         <div className="flex justify-between text-muted-foreground">
           <span className=" text-xs">Discount</span>
           <span className="text-xs">{formatCurrency(discount)}</span>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
 
-      {deliveryCost ? (
+      {deliveryCost === " " ? (
         <div className="flex justify-between text-muted-foreground pb-2 border-b">
           <span className=" text-xs">Delivery cost</span>
           <span className="font-medium text-xs">
             {formatCurrency(deliveryCost)}
           </span>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
 
       <div className="flex justify-between  pt-4 ">
         <span className="font-bold text-xs">Total</span>
         <span className="text-xs font-bold">{formatCurrency(total)}</span>
       </div>
 
-      {amountPaid ? (
+      {amountPaid === " " ? (
         <div className="flex justify-between text-muted-foreground">
           <span className="text-xs">Amount paid</span>
           <span className="text-muted-foreground text-xs">
             {formatCurrency(amountPaid)}
           </span>
         </div>
-      ) : (
-        ""
-      )}
+      ) : null}
 
       <div className="flex justify-between">
         <span className="text-xs font-bold">Balance due</span>

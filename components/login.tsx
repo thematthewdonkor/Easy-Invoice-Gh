@@ -1,13 +1,22 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 
-export const Login = () => {
+export const LogIn = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
+
   return (
     <div className="mt-12 lg:mt-0">
       <SignedIn>
-        <Button className="text-sm w-full" variant="userbtn" asChild>
+        <Button className="sm:text-sm text-xs w-full" variant="userbtn" asChild>
           <UserButton showName />
         </Button>
       </SignedIn>

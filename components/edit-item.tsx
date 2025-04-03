@@ -9,7 +9,7 @@ import { useInvoiceStore } from "@/store/useInvoiceStore";
 
 import { RemoveItem } from "./remove-item";
 
-export const AddItem = ({ id }: { id: string }) => {
+export const EditItem = ({ id }: { id: string }) => {
   const { items, updateItem } = useInvoiceStore();
 
   // Find the current item by ID
@@ -45,7 +45,7 @@ export const AddItem = ({ id }: { id: string }) => {
             updateItem(id, "quantity", e.target.value)
           }
           className={` ${
-            !item.quantity ? "border-red-600" : ""
+            !item.quantity ? "border-red-600" : "border-gray-100"
           } w-full mt-1 sm:mt-0 text-xs`}
         />
       </TableCell>
@@ -59,10 +59,10 @@ export const AddItem = ({ id }: { id: string }) => {
             type="number"
             value={item.price}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              updateItem(id, "price", String(e.target.value))
+              updateItem(id, "price", e.target.value)
             }
             className={`${
-              String(item.price) === "" ? "border-red-600" : ""
+              !String(item.price) ? "border-red-600" : "border-gray-100"
             } w-full mt-1 sm:mt-0 text-xs`}
           />
         </div>

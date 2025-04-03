@@ -1,94 +1,67 @@
-//Create invoice schema types
+import { Invoice } from "@/lib/api/invoices";
+
+//====================INVOICE SCHEMA
 export type InvoiceSchema = {
-  // Invoice details types
   companyLogo?: string;
   companyName: string;
-  invoiceNumber?: number;
+  invoiceNumber?: string;
   customersName: string;
   customersLocation?: string;
-  date?: string;
+  date?: string; // Can use Date type if needed
   dueDate?: string;
   notes?: string;
   paymentDetails?: string;
 
-  //Invoice items types
-  items: {
-    description: string;
-    quantity: number;
-    price: number;
-    amount: number;
-  }[];
+  items: InvoiceItemSchema[]; // Array of invoice items
 
-  //Summary types
-  summary: {
-    subtotal: number;
-    discount?: number;
-    taxRate?: number;
-    deliveryCost?: number;
-    total: number;
-    amountPaid?: number;
-    balanceDue: number;
-  };
+  subtotal: string;
+  discount?: string;
+  deliveryCost?: string;
+  total: string;
+  amountPaid?: string;
+  balanceDue: string;
 };
 
-//NewInvoice component Props
-export type NewInvoiceProps = {
-  //Invoice details
-  companyLogo: string;
-  // logo: boolean;
-  companyName: string;
-  invoiceNumber: number;
-  customersName: string;
-  customersLocation: string;
-  date?: string;
-  dueDate?: string;
-  notes?: string;
-  paymentDetails?: string;
-
-  items: AddItemProps[];
-  summary: SummaryProps;
-
-  //actions
-  createInvoice: (
-    mutateAsyncFn: (data: InvoiceSchema) => Promise<{ data: { id: string } }>
-  ) => Promise<string>;
-  handleChange: (field: string, value: string | number) => void;
-  updateItem: (id: string, field: string, value: string | number) => void;
-  addItem: () => void;
-  updateSummary: (field: string, value: number) => void;
-  calculateSubtotal: () => number;
-  removeItem: (id: string) => void;
-};
-
-//AddItem component Props
-export type AddItemProps = {
+// New Invoice Item Schema
+export type InvoiceItemSchema = {
   id: string;
   description: string;
   quantity: number;
-  price: number;
-  amount: number;
+  price: string;
+  amount: string;
 };
-
-//Summary component Props
+// New Invoice Item Schema
 export type SummaryProps = {
-  subtotal: number;
-  discount: number;
-  taxRate: number;
-  total: number;
-  deliveryCost: number;
-  amountPaid: number;
-  balanceDue: number;
+  subtotal: string;
+  discount?: string;
+  deliveryCost?: string;
+  total: string;
+  amountPaid?: string;
+  balanceDue: string;
 };
 
-//ItemItem component Props
-export type InvoiceItemProps = {
-  key: string;
-  description: string;
-  quantity: number;
-  price: number;
-  amount: number;
-};
+//====================NEW INVOICE SCHEMA
+export type NewInvoiceProps = Omit<
+  InvoiceSchema,
+  "description" | "quantity" | "price" | "amount"
+> & {
+  items: {
+    id: string;
+    description: string;
+    quantity: number;
+    price: string;
+    amount: string;
+  }[];
 
-export type InvoiceProps = {
-  invoiceId: string;
+  //actions
+  saveTemplate: () => void;
+  resetInvoice: () => void;
+  createInvoice: (
+    mutateAsyncFn: (data: InvoiceSchema) => Promise<Invoice>
+  ) => Promise<Invoice>;
+  setInvoiceData: (invoiceData: InvoiceSchema) => void;
+  handleChange: (field: string, value: string) => void;
+  updateItem: (id: string, field: string, value?: string) => void;
+  addItem: () => void;
+  removeItem: (id: string) => void;
 };
