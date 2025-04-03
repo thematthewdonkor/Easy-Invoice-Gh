@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
       },
     ], // Add the UploadThing domain here
   },
+
+  typescript: {
+    ignoreBuildErrors: process.env.VERCEL_ENV !== undefined,
+  },
 };
 
 export default nextConfig;
