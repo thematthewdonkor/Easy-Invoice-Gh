@@ -4,6 +4,7 @@ import { auth } from "@clerk/nextjs/server";
 
 const f = createUploadthing();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const authentication = async (req: Request) => {
   const { userId } = await auth();
   return { id: userId };

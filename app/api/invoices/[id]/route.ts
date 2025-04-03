@@ -40,13 +40,6 @@ export async function PUT(
   } catch (error) {
     console.error("Error updating invoice:", error);
 
-    // Different status code for not found vs unauthorized
-    // const status = (error as Error).message.includes("not found")
-    //   ? 404
-    //   : (error as Error).message.includes("Unauthorized")
-    //   ? 403
-    //   : 500;
-
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
