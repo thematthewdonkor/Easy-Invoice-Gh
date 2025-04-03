@@ -1,10 +1,10 @@
 import Edit from "../Edit";
 
-interface PageProps {
+interface PageParams {
   id: string;
 }
 
-const EditInvoicePage = async ({ params }: { params: PageProps }) => {
+const EditInvoicePage = async ({ params }: { params: PageParams }) => {
   const { id } = params;
 
   return <Edit id={id} />;
