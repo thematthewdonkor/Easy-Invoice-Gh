@@ -3,10 +3,9 @@ import Edit from "../Edit";
 const EditInvoicePage = async ({
   params,
 }: {
-  params: { id: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>;
 }) => {
-  const { id } = params;
+  const { id } = await params;
 
   return <Edit id={id} />;
 };
