@@ -1,6 +1,6 @@
 "use client";
 
-import { NewInvoice } from "@/components/new-invoice";
+import { NewInvoice } from "./new-invoice";
 import Link from "next/link";
 import { LogIn } from "@/components/login";
 import Image from "next/image";
