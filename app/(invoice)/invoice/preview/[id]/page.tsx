@@ -1,11 +1,11 @@
 import { Invoice } from "../Invoice";
 
-export default async function PreviewInvoicePage({
+export default async function Page({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const id = params.id;
+  const { id } = await params;
 
   return <Invoice id={id} />;
 }
