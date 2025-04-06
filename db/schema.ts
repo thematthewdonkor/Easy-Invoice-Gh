@@ -44,7 +44,7 @@ export const invoiceItems = pgTable("invoice_items", {
     .references(() => invoices.id, { onDelete: "cascade", onUpdate: "cascade" })
     .notNull(),
 
-  description: text("description").notNull(),
+  description: text("description"),
   quantity: integer("quantity").notNull(),
   price: text("price").notNull(),
   amount: text("amount").notNull(),

@@ -46,7 +46,6 @@ export const createInvoice = async (invoice: InvoiceSchema) => {
         dueDate: invoice.dueDate || null,
         notes: invoice.notes || null,
         paymentDetails: invoice.paymentDetails || null,
-
         subtotal: invoice.subtotal,
         discount: invoice.discount || null,
         deliveryCost: invoice.deliveryCost || null,

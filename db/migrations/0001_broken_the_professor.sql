@@ -1,0 +1,1 @@
+ALTER TABLE "invoice_items" ALTER COLUMN "description" DROP NOT NULL;
