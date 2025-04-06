@@ -56,13 +56,18 @@ export const InvoiceHeader = ({ id, invoiceRef }: InvoiceHeaderProps) => {
       <Button
         size="sm"
         variant="default"
-        className="bg-indigo-500 hover:bg-indigo-600"
+        className="bg-indigo-500 hover:bg-indigo-600 text-sm"
         onClick={() => router.push("/dashboard")}
       >
         Invoices
       </Button>
 
-      <Button variant="outline" size="sm" onClick={handleInvoiceDownload}>
+      <Button
+        variant="outline"
+        size="sm"
+        className="text-sm"
+        onClick={handleInvoiceDownload}
+      >
         <Download className="h-2 w-2" />
         Download
       </Button>
@@ -74,11 +79,11 @@ export const InvoiceHeader = ({ id, invoiceRef }: InvoiceHeaderProps) => {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem className="text-xs" onClick={handleInvoiceUpdate}>
+          <DropdownMenuItem className="text-sm" onClick={handleInvoiceUpdate}>
             <Pencil className="h-2 w-2 mr-1" />
             Edit
           </DropdownMenuItem>
-          <DropdownMenuItem className="text-xs" onClick={handleDeleteInvoice}>
+          <DropdownMenuItem className="text-sm" onClick={handleDeleteInvoice}>
             <Trash2 className="h-2 w-2 mr-1 text-red-500" />
             Delete
           </DropdownMenuItem>

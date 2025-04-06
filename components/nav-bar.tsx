@@ -29,7 +29,7 @@ export const Navbar = () => {
             className="
             hidden 
             sm:flex     
-            sm:text-md 
+            sm:text-lg
             text-sm
             font-medium 
             text-gray-900
@@ -45,7 +45,7 @@ export const Navbar = () => {
             href="/invoice/new"
             className="hidden 
             sm:flex 
-            text-sm  
+            text-lg
             text-gray-900
             hover:text-indigo-900
             transition 

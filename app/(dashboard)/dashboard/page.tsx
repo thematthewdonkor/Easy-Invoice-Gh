@@ -9,7 +9,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Plus } from "lucide-react";
+import { ChevronDown, Plus, Trash2, Pencil, Rows4 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useInvoices } from "@/hooks/useInvoices";
 import { format } from "date-fns";
@@ -52,7 +52,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className="border-b space-y-2 flex flex-col justify-start w-full">
+      <header className="border-b space-y-2 flex flex-col justify-start sm:justify-center w-full ">
         <div className="container items-center mx-auto flex h-16 sm:items-end md:items-end lg:items-center md:pb-3 justify-between px-6 md:px-6 gap-6">
           <Link
             href="/"
@@ -75,12 +75,12 @@ const Dashboard = () => {
             hidden 
             sm:flex     
             sm:text-md 
+            md:text-lg 
             text-sm
             font-medium 
             text-gray-900
-            hover:text-indigo-950
+            hover:text-indigo-900
             transition
-           
             "
             >
               My Invoices
@@ -94,12 +94,14 @@ const Dashboard = () => {
               }}
               className="hidden 
             sm:flex 
+            sm:text-lg
             text-sm  
             text-gray-900
             hover:text-indigo-900
             transition 
             font-medium 
-            text-primary"
+            text-primary
+            "
             >
               New Invoice
             </Button>
@@ -150,9 +152,9 @@ const Dashboard = () => {
       </header>
 
       <div className="container mx-auto px-4 sm:px-6">
-        <main className="max-w-4xl mx-auto pt-8 sm:pt-12 mb-6 sm:mb-8">
+        <main className="max-w-4xl mx-auto pt-6 sm:pt-8 mb-6 sm:mb-8">
           <div className="flex flex-col items-center mb-4 sm:mb-6 p-4 justify-center">
-            <h1 className="text-2xl sm:text-3xl font-bold text-indigo-950">
+            <h1 className="text-2xl sm:text-4xl font-bold text-indigo-950">
               My invoices
             </h1>
           </div>
@@ -173,7 +175,7 @@ const Dashboard = () => {
                     sm:w-[30%] 
                     py-3 
                     text-left 
-                    text-xs 
+                    text-sm 
                     font-medium 
                     text-gray-500 
                     tracking-tight
@@ -190,7 +192,7 @@ const Dashboard = () => {
                     sm:px-6 
                     py-3 
                     text-left 
-                    text-xs 
+                    text-sm 
                     font-medium
                     text-gray-500 
                     tracking-tight
@@ -198,17 +200,18 @@ const Dashboard = () => {
                     >
                       REFERENCE
                     </TableHead>
-                    <TableHead className=" sm:[25%] px-4 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-tight">
+                    <TableHead className=" sm:[25%] px-4 sm:px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-tight">
                       DATE
                     </TableHead>
-                    <TableHead className="hidden sm:inline-block px-4 sm:[25%] sm:px-6 py-3 text-left text-xs font-medium text-gray-500 tracking-tight">
+                    <TableHead className="hidden sm:mb-4 lg:mb-0 sm:inline-block px-4 sm:[25%] sm:px-6 py-3 text-left text-sm font-medium text-gray-500 tracking-tight">
                       DUE DATE
                     </TableHead>
-                    <TableHead className="px-4 sm:[10%] sm:px-6 py-3 text-right text-xs font-medium text-gray-500 tracking-tight">
+                    <TableHead className="px-4 sm:[10%] sm:px-6 py-3 text-right text-sm font-medium text-gray-500 tracking-tight">
                       TOTAL
                     </TableHead>
                   </TableRow>
                 </TableHeader>
+
                 <TableBody className="bg-white divide-y divide-gray-50">
                   {invoices && invoices?.length > 0 ? (
                     invoices.map((invoice) => (
@@ -216,28 +219,28 @@ const Dashboard = () => {
                         key={invoice.id}
                         className="divide-y divide-gray-50"
                       >
-                        <TableCell className="text-left text-xs">
+                        <TableCell className="text-left text-sm">
                           {invoice?.customersName}
                         </TableCell>
                         <TableCell
-                          className="text-left text-xs hidden sm:flex sm:flex-col"
+                          className="text-left text-sm hidden sm:flex sm:flex-col"
                           onClick={() => router.push(`/invoice/preview`)}
                         >
                           #{invoice?.invoiceNumber}
                         </TableCell>
 
-                        <TableCell className="text-left text-xs">
+                        <TableCell className="text-left text-sm">
                           {invoice?.date
                             ? format(new Date(invoice.date), "MMM, dd, yyy")
                             : "N/A"}
                         </TableCell>
 
-                        <TableCell className="text-center text-xs hidden sm:flex sm:flex-col">
+                        <TableCell className="text-sm hidden sm:flex sm:flex-col sm:justify-self-center">
                           {invoice?.dueDate
                             ? format(new Date(invoice.dueDate), "MMM, dd, yyy")
                             : "N/A"}
                         </TableCell>
-                        <TableCell className="text-right text-xs">
+                        <TableCell className="text-right text-sm">
                           {invoice.balanceDue || "0.00"}
                         </TableCell>
                         <TableCell className="px-4 sm:px-6 whitespace-nowrap text-right text-sm">
@@ -249,6 +252,7 @@ const Dashboard = () => {
                           border-gray-300 
                           shadow-sm 
                           py-1 
+                          text-sm
                           font-medium 
                           rounded-md 
                           px-3 
@@ -271,9 +275,9 @@ const Dashboard = () => {
                         bg-white 
                         rounded-lg 
                         border
-                        py-1
-                        min-w-[80px]
-                        text-xs
+                        mt-2
+                        py-3
+                        min-w-[100%]
                         text-left
                         cursor-pointer
                         p-4
@@ -284,22 +288,26 @@ const Dashboard = () => {
                                 onClick={() =>
                                   router.push(`/invoice/preview/${invoice.id}`)
                                 }
+                                className=" text-sm text-indigo-950 transition hover:text-indigo-900 flex items-center gap-2"
                               >
+                                <Rows4 className="h-4 w-4 mr-1" />
                                 view
                               </DropdownMenuItem>
                               <DropdownMenuItem
                                 onClick={() =>
                                   router.push(`/invoice/edit/${invoice.id}`)
                                 }
-                                className="text-indigo-950"
+                                className=" text-sm text-indigo-950 transition hover:text-indigo-900 flex items-center gap-2"
                               >
+                                <Pencil className="h-4 w-4 mr-1" />
                                 Edit
                               </DropdownMenuItem>
 
                               <DropdownMenuItem
                                 onClick={() => handleDeleteInvoice(invoice.id)}
-                                className="text-red-500"
+                                className="text-sm text-red-500 flex items-center gap-2"
                               >
+                                <Trash2 className=" h-4 w-4 mr-1 text-red-500" />
                                 Delete
                               </DropdownMenuItem>
                             </DropdownMenuContent>

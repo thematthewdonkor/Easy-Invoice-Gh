@@ -21,7 +21,7 @@ export const AddItem = ({ id }: { id: string }) => {
     <TableRow className="flex flex-col sm:table-row border-b mb-2 sm:mb-0 sm:border-b-0">
       <TableCell className=" align-top px-2 py-2 sm:px-4 sm:py-4 w-full sm:w-auto">
         <div className="flex items-center justify-between sm:hidden">
-          <Label className="text-xs block">Description</Label>
+          <Label className="text-sm block">Description</Label>
           <RemoveItem id={id} />
         </div>
         <Input
@@ -30,13 +30,13 @@ export const AddItem = ({ id }: { id: string }) => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             updateItem(id, "description", e.target.value)
           }
-          className="w-full placeholder:text-xs text-xs"
+          className="w-full placeholder:text-xs text-sm"
           required
         />
       </TableCell>
 
       <TableCell className="align-top px-2 py-2 sm:px-4 sm:py-4 w-1/2 sm:w-auto">
-        <Label className="text-xs block sm:hidden">Quantity</Label>
+        <Label className="text-sm block sm:hidden">Quantity</Label>
         <Input
           required
           type="number"
@@ -46,14 +46,14 @@ export const AddItem = ({ id }: { id: string }) => {
           }
           className={` ${
             !item.quantity ? "border-red-600" : ""
-          } w-full mt-1 sm:mt-0 text-xs`}
+          } w-full mt-1 sm:mt-0 text-sm`}
         />
       </TableCell>
 
       <TableCell className="align-top px-2 py-2 sm:px-4 sm:py-4 w-1/2 sm:w-auto">
-        <Label className="font-medium text-xs block sm:hidden">Price</Label>
+        <Label className="font-medium text-sm block sm:hidden">Price</Label>
         <div className="flex items-center gap-1">
-          <span className="text-xs">GH₵</span>
+          <span className="text-sm">GH₵</span>
           <Input
             required
             type="number"
@@ -63,15 +63,15 @@ export const AddItem = ({ id }: { id: string }) => {
             }
             className={`${
               String(item.price) === "" ? "border-red-600" : ""
-            } w-full mt-1 sm:mt-0 text-xs`}
+            } w-full mt-1 sm:mt-0 text-sm`}
           />
         </div>
       </TableCell>
 
       <TableCell className="align-top px-2 py-2 sm:px-4 sm:py-4 w-full sm:w-auto sm:text-right">
         <div className="flex justify-between sm:block">
-          <span className="text-xs block sm:hidden">Amount</span>
-          <span className="text-xs">{formatCurrency(item.amount)}</span>
+          <span className="text-sm block sm:hidden">Amount</span>
+          <span className="text-sm">{formatCurrency(item.amount)}</span>
         </div>
       </TableCell>
 

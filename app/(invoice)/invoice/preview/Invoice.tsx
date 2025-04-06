@@ -74,7 +74,7 @@ export const Invoice = ({ id }: InvoiceProps) => {
               className="
             hidden 
             sm:flex     
-            sm:text-md 
+            sm:text-lg
             text-sm
             font-medium 
             text-gray-900
@@ -94,6 +94,7 @@ export const Invoice = ({ id }: InvoiceProps) => {
               }}
               className="hidden 
             sm:flex 
+            sm:text-lg
             text-sm  
             text-gray-900
             hover:text-indigo-900
@@ -180,17 +181,17 @@ export const Invoice = ({ id }: InvoiceProps) => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-4 sm:mb-6 md:mb-8">
               <div className="space-y-1">
-                <h3 className="text-xs font-medium text-muted-foreground">
+                <h3 className="text-sm font-medium text-muted-foreground">
                   Customer&#39;s name
                 </h3>
-                <p className="font-medium text-xs">{data.customersName}</p>
+                <p className="font-medium text-sm">{data.customersName}</p>
               </div>
               {data?.customersLocation ? (
                 <div className="space-y-1">
-                  <h3 className="text-xs font-medium text-muted-foreground">
+                  <h3 className="text-sm font-medium text-muted-foreground">
                     Customer&#39;s Location
                   </h3>
-                  <p className="font-medium text-xs">
+                  <p className="font-medium text-sm">
                     {data.customersLocation}
                   </p>
                 </div>
@@ -199,20 +200,20 @@ export const Invoice = ({ id }: InvoiceProps) => {
               <div className="flex justify-between sm:items-start mt-2 sm:mt-0">
                 {formattedDate ? (
                   <div className="flex flex-col sm:items-center gap-1">
-                    <h3 className="text-xs font-medium text-muted-foreground">
+                    <h3 className="text-sm font-medium text-muted-foreground">
                       Date
                     </h3>
-                    <p className="text-xs font-medium">{formattedDate}</p>
+                    <p className="text-sm font-medium">{formattedDate}</p>
                   </div>
                 ) : (
                   "N/A"
                 )}
                 {formattedDueDate ? (
                   <div className="flex flex-col sm:items-start gap-1 mt-2 sm:mt-0">
-                    <h3 className="text-xs font-medium text-muted-foreground">
+                    <h3 className="text-sm font-medium text-muted-foreground">
                       Due date
                     </h3>
-                    <p className="text-xs font-medium">{formattedDueDate}</p>
+                    <p className="text-sm font-medium">{formattedDueDate}</p>
                   </div>
                 ) : (
                   "N/A"
@@ -227,16 +228,16 @@ export const Invoice = ({ id }: InvoiceProps) => {
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-gray-100">
-                        <TableHead className="whitespace-nowrap text-xs w-[40%]">
+                        <TableHead className="whitespace-nowrap text-sm w-[40%]">
                           ITEM
                         </TableHead>
-                        <TableHead className="text-right whitespace-nowrap text-xs w-[20%]">
+                        <TableHead className="text-right whitespace-nowrap text-sm w-[20%]">
                           QUANTITY
                         </TableHead>
-                        <TableHead className="text-right whitespace-nowrap text-xs w-[20%]">
+                        <TableHead className="text-right whitespace-nowrap text-sm w-[20%]">
                           PRICE
                         </TableHead>
-                        <TableHead className="text-right whitespace-nowrap text-xs w-[20%]">
+                        <TableHead className="text-right whitespace-nowrap text-sm w-[20%]">
                           AMOUNT
                         </TableHead>
                       </TableRow>
@@ -266,7 +267,6 @@ export const Invoice = ({ id }: InvoiceProps) => {
               </div>
             </div>
 
-            {/* Invoice Summary */}
             <InvoiceSummary
               subtotal={data?.subtotal}
               discount={data?.discount}
@@ -276,15 +276,14 @@ export const Invoice = ({ id }: InvoiceProps) => {
               balanceDue={data?.balanceDue}
             />
 
-            {/* Additional Invoice Details */}
             <div className="max-w-4xl mx-auto space-y-4 mt-3">
               <div className="grid grid-cols-1 gap-4 pt-4">
                 {data?.notes ? (
                   <div className="relative">
-                    <h3 className="text-sm font-medium mb-1 text-muted-foreground">
+                    <h3 className="text-sm font-semibold mb-1 text-muted-foreground">
                       Notes
                     </h3>
-                    <p className="text-xs text-muted-foreground w-full sm:w-32">
+                    <p className="text-sm text-muted-foreground w-full sm:w-32">
                       {data.notes}
                     </p>
                   </div>
@@ -293,10 +292,10 @@ export const Invoice = ({ id }: InvoiceProps) => {
                 )}
                 {data?.paymentDetails ? (
                   <div className="flex flex-col relative">
-                    <h3 className="text-sm font-medium mb-1 text-muted-foreground">
+                    <h3 className="text-sm font-semibold mb-1 text-muted-foreground">
                       Payment Details
                     </h3>
-                    <p className="text-xs sm:w-32 text-balance text-muted-foreground w-full">
+                    <p className="text-sm sm:w-32 text-balance text-muted-foreground w-full">
                       {data.paymentDetails}
                     </p>
                   </div>

@@ -16,8 +16,15 @@ export const LogIn = () => {
   return (
     <div className="mt-12 lg:mt-0">
       <SignedIn>
-        <Button className="sm:text-sm text-xs w-full" variant="userbtn" asChild>
-          <UserButton showName />
+        <Button variant="userbtn" asChild>
+          <UserButton
+            showName
+            appearance={{
+              elements: {
+                formButtonPrimary: "text-sm",
+              },
+            }}
+          />
         </Button>
       </SignedIn>
 

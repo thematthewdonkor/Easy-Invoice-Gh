@@ -14,14 +14,14 @@ export const InvoiceItem = ({
 }: InvoiceItemSchema) => {
   return (
     <TableRow className="border-0">
-      <TableCell className="whitespace-nowrap text-xs">{description}</TableCell>
-      <TableCell className="text-right whitespace-nowrap text-xs">
+      <TableCell className="whitespace-nowrap text-sm">{description}</TableCell>
+      <TableCell className="text-right whitespace-nowrap text-sm">
         {quantity}
       </TableCell>
-      <TableCell className="text-right whitespace-nowrap text-xs">
+      <TableCell className="text-right whitespace-nowrap text-sm">
         {formatCurrency(price)}
       </TableCell>
-      <TableCell className="text-right whitespace-nowrap text-xs">
+      <TableCell className="text-right whitespace-nowrap text-sm">
         {formatCurrency(amount)}
       </TableCell>
     </TableRow>

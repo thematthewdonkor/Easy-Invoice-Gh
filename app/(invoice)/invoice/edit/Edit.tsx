@@ -122,7 +122,7 @@ const Edit = ({ id }: { id?: string }) => {
               className="
             hidden 
             sm:flex     
-            sm:text-md 
+            sm:text-lg 
             text-sm
             font-medium 
             text-gray-900
@@ -142,6 +142,7 @@ const Edit = ({ id }: { id?: string }) => {
               }}
               className="hidden 
             sm:flex 
+            sm:text-lg
             text-sm  
             text-gray-900
             hover:text-indigo-900
@@ -210,7 +211,7 @@ const Edit = ({ id }: { id?: string }) => {
                 placeholder="Your Company*"
                 className={`${
                   !companyName ? "border-red-600" : "border-gray-100"
-                } h-12 text-xs w-full sm:w-[200px] placeholder:text-xs
+                } h-12 text-sm w-full sm:w-[200px] placeholder:text-xs
       `}
                 value={companyName}
                 onChange={(e) => handleChange("companyName", e.target.value)}
@@ -221,14 +222,14 @@ const Edit = ({ id }: { id?: string }) => {
 
           <div className="flex items-center gap-4 sm:gap-8 w-full sm:w-auto">
             <div className="text-left sm:text-right space-y-1 w-full sm:w-auto">
-              <Label className="text-xs text-muted-foreground">INVOICE</Label>
+              <Label className="text-sm text-muted-foreground">INVOICE</Label>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-muted-foreground">#</span>
+                <span className="text-sm text-muted-foreground">#</span>
                 <Input
                   className="
         h-12 
         sm:w-[200px] 
-        text-xs w-full
+        text-sm w-full
          placeholder:text-xs
           border
        border-gray-300 rounded
@@ -249,12 +250,12 @@ const Edit = ({ id }: { id?: string }) => {
         <CardContent className="space-y-6 sm:space-y-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div className="space-y-2">
-              <Label className="text-xs">Customer&apos;s Name*</Label>
+              <Label className="text-sm">Customer&apos;s Name*</Label>
               <Input
                 required
                 className={`${
                   !customersName ? "border-red-500" : "border-gray-100"
-                } h-12 text-xs placeholder:text-xs
+                } h-12 text-sm placeholder:text-sm
        border
      
       `}
@@ -264,32 +265,32 @@ const Edit = ({ id }: { id?: string }) => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs">Customer&apos;s Location</Label>
+              <Label className="text-sm">Customer&apos;s Location</Label>
               <Input
                 placeholder="(optional)"
                 value={customersLocation || ""}
                 onChange={(e) =>
                   handleChange("customersLocation", e.target.value)
                 }
-                className="placeholder:text-xs h-12
+                className="placeholder:text-sm h-12
        border
        border-gray-300 rounded
       focus:outline-none
       focus:ring-1
       focus:ring-indigo-500
       focus:border-indigo-500
-      text-xs
+      text-sm
       "
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs">Date</Label>
+              <Label className="text-sm">Date</Label>
               <Input
                 type="date"
                 value={date || ""}
                 onChange={(e) => handleChange("date", e.target.value)}
                 className="
-    text-xs 
+    text-sm 
     block 
     px-3 
     py-1.5 
@@ -304,12 +305,12 @@ const Edit = ({ id }: { id?: string }) => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-xs">Due Date</Label>
+              <Label className="text-sm">Due Date</Label>
               <Input
                 type="date"
                 value={dueDate || ""}
                 onChange={(e) => handleChange("dueDate", e.target.value)}
-                className="text-xs block px-3 py-1.5 border-gray-300 
+                className="text-sm block px-3 py-1.5 border-gray-300 
     rounded focus:outline-none focus:ring-1 
     focus:ring-indigo-500 focus:border-indigo-500"
                 min={date}
@@ -322,16 +323,16 @@ const Edit = ({ id }: { id?: string }) => {
               <Table>
                 <TableHeader className="hidden sm:table-header-group w-full bg-indigo-950">
                   <TableRow className="w-full">
-                    <TableHead className="w-[45%] text-white text-xs flex-1">
+                    <TableHead className="w-[45%] text-white text-sm flex-1">
                       Item
                     </TableHead>
-                    <TableHead className="w-[15%] text-white text-xs">
+                    <TableHead className="w-[15%] text-white text-sm">
                       Quantity
                     </TableHead>
-                    <TableHead className="w-[25%] text-white text-xs">
+                    <TableHead className="w-[25%] text-white text-sm">
                       Price
                     </TableHead>
-                    <TableHead className="text-right w-[15%] text-white text-xs">
+                    <TableHead className="text-right w-[15%] text-white text-sm">
                       Amount
                     </TableHead>
                   </TableRow>
@@ -348,7 +349,7 @@ const Edit = ({ id }: { id?: string }) => {
           <Button
             size="sm"
             variant="outline"
-            className="text-indigo-600 text-xs hover:text-indigo-700 w-full sm:w-auto"
+            className="text-indigo-600 text-sm hover:text-indigo-700 w-full sm:w-auto"
             onClick={addItem}
           >
             + Add Item
@@ -357,22 +358,22 @@ const Edit = ({ id }: { id?: string }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label className="text-xs text-muted-foreground">Notes</Label>
+                <Label className="text-sm text-muted-foreground">Notes</Label>
                 <Textarea
                   placeholder="Notes - any relevant information not already covered"
-                  className="placeholder:text-xs text-xs sm:h-24"
+                  className="placeholder:text-xs text-sm sm:h-24"
                   value={notes || ""}
                   onChange={(e) => handleChange("notes", e.target.value)}
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-xs text-muted-foreground">
+                <Label className="text-sm text-muted-foreground">
                   Payment Details
                 </Label>
                 <Textarea
                   value={paymentDetails || ""}
                   placeholder="Terms and conditions - late fees, payment methods, delivery schedule"
-                  className="placeholder:text-xs text-xs sm:h-24"
+                  className="placeholder:text-xs text-sm sm:h-24"
                   onChange={(e) =>
                     handleChange("paymentDetails", e.target.value)
                   }
@@ -384,7 +385,7 @@ const Edit = ({ id }: { id?: string }) => {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-2 pt-2 sm:pt-2">
             <Button
               variant="outline"
-              className="w-full sm:w-auto text-xs"
+              className="w-full sm:w-auto text-sm"
               size="lg"
               onClick={() => router.back()}
             >
@@ -398,11 +399,11 @@ const Edit = ({ id }: { id?: string }) => {
               disabled={updateInvoiceMutation.isPending}
             >
               {updateInvoiceMutation.isPending ? (
-                <div className="flex items-center gap-2 text-xs">
+                <div className="flex items-center gap-2 text-sm">
                   Updating...
                 </div>
               ) : (
-                <span className="text-xs">Save</span>
+                <span className="text-sm">Save</span>
               )}
             </Button>
           </div>

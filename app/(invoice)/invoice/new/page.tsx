@@ -31,7 +31,7 @@ const Page = () => {
               className="
             hidden 
             sm:flex     
-            sm:text-md 
+            sm:text-lg
             text-sm
             font-medium 
             text-gray-900
@@ -46,7 +46,8 @@ const Page = () => {
             <Link
               href="/invoice/new"
               className="hidden 
-            sm:flex 
+            sm:flex
+            sm:text-lg
             text-sm  
             text-gray-900
             hover:text-indigo-900
