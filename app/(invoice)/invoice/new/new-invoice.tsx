@@ -44,6 +44,9 @@ export const NewInvoice = () => {
     addItem,
   } = useInvoiceStore();
 
+  // Check if the required fields are filled
+  const isFormValid = companyName.trim() !== "" && customersName.trim() !== "";
+
   // Handle invoice creation
   const handleSubmitInvoice = async () => {
     const invoiceData = await createInvoice(createMutation.mutateAsync);
@@ -81,7 +84,6 @@ export const NewInvoice = () => {
           `}
               value={companyName}
               onChange={(e) => handleChange("companyName", e.target.value)}
-              required
             />
           </div>
         </div>
@@ -262,7 +264,7 @@ export const NewInvoice = () => {
             className="bg-indigo-500 hover:bg-indigo-600 w-full sm:w-auto"
             onClick={handleSubmitInvoice}
             size="lg"
-            disabled={createMutation.isPending}
+            disabled={createMutation.isPending || !isFormValid}
           >
             <span className="text-sm">Create</span>
           </Button>
