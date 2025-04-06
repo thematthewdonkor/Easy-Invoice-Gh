@@ -125,10 +125,11 @@ export const Invoice = ({ id }: InvoiceProps) => {
           >
             Home
           </Link>
+
           <Button
             onClick={() => {
-              router.push("/invoice/new");
               resetInvoice();
+              router.push("/invoice/new");
             }}
             className="
           flex
