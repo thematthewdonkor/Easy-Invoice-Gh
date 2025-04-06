@@ -9,7 +9,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Plus, Trash2, Pencil, Rows4 } from "lucide-react";
+import { ChevronDown, Plus, Trash2, Pencil, Eye } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useInvoices } from "@/hooks/useInvoices";
 import { format } from "date-fns";
@@ -290,7 +290,7 @@ const Dashboard = () => {
                                 }
                                 className=" text-sm text-indigo-950 transition hover:text-indigo-900 flex items-center gap-2"
                               >
-                                <Rows4 className="h-4 w-4 mr-1" />
+                                <Eye className="h-4 w-4 mr-1" />
                                 view
                               </DropdownMenuItem>
                               <DropdownMenuItem
