@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Roboto } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "./globals.css";
 
 import { ClerkProvider } from "@clerk/nextjs";
 import { QueryProvider } from "@/components/query-provider";
 import { Toaster } from "react-hot-toast";
 
-const urbanist = Roboto({
+const urbanist = Urbanist({
   variable: "--font-urbanist",
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
