@@ -49,7 +49,7 @@ export const invoiceApi = {
   // Create new invoice
   create: async (data: InvoiceSchema): Promise<Invoice> => {
     const response = await api.post<ApiResponse<Invoice>>("/invoices", data);
-    if (!response.data.success) {
+    if (response.data.error) {
       throw new Error(response.data.error || "Failed to create invoice");
     }
     return response.data.data as Invoice;

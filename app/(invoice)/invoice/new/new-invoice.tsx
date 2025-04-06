@@ -47,7 +47,6 @@ export const NewInvoice = () => {
   // Handle invoice creation
   const handleSubmitInvoice = async () => {
     const invoiceData = await createInvoice(createMutation.mutateAsync);
-
     if (invoiceData?.id) {
       resetInvoice();
       router.push(`/invoice/preview/${invoiceData.id}`);

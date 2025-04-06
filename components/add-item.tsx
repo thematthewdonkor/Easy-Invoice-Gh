@@ -31,14 +31,12 @@ export const AddItem = ({ id }: { id: string }) => {
             updateItem(id, "description", e.target.value)
           }
           className="w-full placeholder:text-xs text-sm"
-          required
         />
       </TableCell>
 
       <TableCell className="align-top px-2 py-2 sm:px-4 sm:py-4 w-1/2 sm:w-auto">
         <Label className="text-sm block sm:hidden">Quantity</Label>
         <Input
-          required
           type="number"
           value={item.quantity}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -55,7 +53,6 @@ export const AddItem = ({ id }: { id: string }) => {
         <div className="flex items-center gap-1">
           <span className="text-sm">GH₵</span>
           <Input
-            required
             type="number"
             value={item.price}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

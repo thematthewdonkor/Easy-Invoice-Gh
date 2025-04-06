@@ -4,6 +4,15 @@ import { persist } from "zustand/middleware";
 import { NewInvoiceProps, InvoiceSchema, InvoiceItemSchema } from "@/types";
 import { v4 as uuidv4 } from "uuid";
 
+// Create a function to generate a default item to avoid code duplication
+const createDefaultItem = (): InvoiceItemSchema => ({
+  id: uuidv4(),
+  description: "",
+  quantity: 1,
+  price: "0.00",
+  amount: "0.00",
+});
+
 export const useInvoiceStore = create<NewInvoiceProps>()(
   persist(
     (set, get) => ({
@@ -16,7 +25,8 @@ export const useInvoiceStore = create<NewInvoiceProps>()(
       dueDate: "",
       notes: "",
       paymentDetails: "",
-      items: [],
+      // Initialize with one default item
+      items: [createDefaultItem()],
       subtotal: "0.00",
       discount: "",
       deliveryCost: "0",
@@ -28,12 +38,6 @@ export const useInvoiceStore = create<NewInvoiceProps>()(
         mutateAsyncFn: (data: InvoiceSchema) => Promise<Invoice>
       ) => {
         const state = get();
-
-        if (state.items.length === 0) {
-          throw new Error(
-            "At least one item is required to create an invoice."
-          );
-        }
 
         const invoiceData: InvoiceSchema = {
           companyLogo: state.companyLogo || "",
@@ -76,7 +80,8 @@ export const useInvoiceStore = create<NewInvoiceProps>()(
           date: "",
           dueDate: "",
 
-          items: [],
+          // Reset to having just one default item instead of empty array
+          items: [createDefaultItem()],
           subtotal: "0.00",
           discount: "0",
           deliveryCost: "0",
@@ -85,7 +90,15 @@ export const useInvoiceStore = create<NewInvoiceProps>()(
           balanceDue: "0.00",
         }),
 
-      setInvoiceData: (invoiceData) => set(invoiceData),
+      setInvoiceData: (invoiceData) => {
+        // Ensure there's at least one item if invoiceData doesn't have any
+        const items =
+          invoiceData.items && invoiceData.items.length > 0
+            ? invoiceData.items
+            : [createDefaultItem()];
+
+        set({ ...invoiceData, items });
+      },
 
       handleChange: (field: string, value: string) =>
         set((state) => {
@@ -143,19 +156,19 @@ export const useInvoiceStore = create<NewInvoiceProps>()(
 
       addItem: () =>
         set((state) => {
-          const newItem: InvoiceItemSchema = {
-            id: uuidv4(),
-            description: "",
-            quantity: 1, // Default to 1
-            price: "0.00",
-            amount: "0.00",
-          };
+          const newItem = createDefaultItem();
           return { items: [...state.items, newItem] };
         }),
 
       removeItem: (id: string) =>
         set((state) => {
-          const newItems = state.items.filter((item) => item.id !== id);
+          // Only filter if there's more than one item
+          let newItems = state.items.filter((item) => item.id !== id);
+
+          // If removing the last item, create a new default one
+          if (newItems.length === 0) {
+            newItems = [createDefaultItem()];
+          }
 
           const subtotal = newItems.reduce(
             (acc, item) => acc + parseFloat(item.amount || "0"),
@@ -192,7 +205,7 @@ export const useInvoiceStore = create<NewInvoiceProps>()(
         ...state,
         items: state.items.filter(
           (item) =>
-            item.description.trim() !== "" ||
+            item.description?.trim() !== "" ||
             parseFloat(item.quantity.toString() || "0") > 0 ||
             parseFloat(item.price || "0") > 0
         ),

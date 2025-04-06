@@ -25,7 +25,7 @@ export type InvoiceSchema = {
 // New Invoice Item Schema
 export type InvoiceItemSchema = {
   id: string;
-  description: string;
+  description?: string;
   quantity: number;
   price: string;
   amount: string;
@@ -47,7 +47,7 @@ export type NewInvoiceProps = Omit<
 > & {
   items: {
     id: string;
-    description: string;
+    description?: string;
     quantity: number;
     price: string;
     amount: string;

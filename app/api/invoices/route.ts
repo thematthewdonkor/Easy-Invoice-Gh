@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createInvoice, getUserInvoices } from "@/db/action";
 import { InvoiceSchema } from "@/types";
+import toast from "react-hot-toast";
 
 //Create new invoice
 export async function POST(request: NextRequest) {
@@ -11,31 +12,7 @@ export async function POST(request: NextRequest) {
     const requiredFields = ["companyName", "customersName"];
 
     for (const field of requiredFields) {
-      if (!body[field]) {
-        return NextResponse.json({
-          error: "Failed to create an invoice, Provide required field",
-        });
-      }
-    }
-
-    if (!Array.isArray(body.items) || body.items.length === 0) {
-      return NextResponse.json(
-        { success: false, error: "At least one item is required" },
-        { status: 400 }
-      );
-    }
-
-    for (const item of body.items) {
-      if (!item.description || !item.quantity || !item.price || !item.amount) {
-        return NextResponse.json(
-          {
-            success: false,
-            error:
-              "Each item must have description, quantity, price, and amount",
-          },
-          { status: 400 }
-        );
-      }
+      if (!body[field]) toast.error("Enter company and customer name");
     }
 
     const invoice = await createInvoice(body as InvoiceSchema);

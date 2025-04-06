@@ -1,10 +1,10 @@
 "use client";
 
-import { NewInvoice } from "./new-invoice";
 import Link from "next/link";
 import { LogIn } from "@/components/login";
 import Image from "next/image";
 import { LayoutDashboard } from "lucide-react";
+import { NewInvoice } from "./new-invoice";
 
 const Page = () => {
   return (
@@ -97,7 +97,9 @@ const Page = () => {
           </Link>
         </nav>
       </header>
-      <NewInvoice />
+      <div className="mt-4 h-full">
+        <NewInvoice />
+      </div>
     </div>
   );
 };

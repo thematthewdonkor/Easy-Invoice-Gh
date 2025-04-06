@@ -7,7 +7,7 @@ import { Plus } from "lucide-react";
 
 export const Navbar = () => {
   return (
-    <header className="border-b space-y-6 flex flex-col justify-center w-full relative">
+    <header className="border-b space-y-6 flex sm:items-center flex-col justify-center w-full relative">
       <div className="container items-center md:max-w-8xl mx-auto flex h-16 sm:items-end md:items-end lg:items-center md:pb-3 justify-between px-6 md:px-6 gap-6">
         <Link
           href="/"
@@ -21,7 +21,7 @@ export const Navbar = () => {
           className="
         flex 
         items-center 
-        gap-6
+        sm:space-x-12
         "
         >
           <Link
@@ -35,24 +35,31 @@ export const Navbar = () => {
             text-gray-900
             hover:text-indigo-950
             transition
-           
             "
           >
-            My Invoices
+            Invoices
           </Link>
 
           <Link
             href="/invoice/new"
             className="hidden 
-            sm:flex 
+            sm:flex
+            sm:items-center
+            sm:justify-center 
+            sm:gap-2
             text-lg
-            text-gray-900
-            hover:text-indigo-900
+           text-white
             transition 
             font-medium 
-            text-primary"
+            text-primary
+           bg-indigo-600
+            px-3
+            py-1
+            rounded-lg
+            "
           >
-            New Invoice
+            <Plus className="h-4 w-4" />
+            Create
           </Link>
         </nav>
         <div className="mb-6 sm:mb-0 lg:mb ml-4">
@@ -90,7 +97,7 @@ export const Navbar = () => {
             "
         >
           <Plus className="h-4 w-4 mr-2" />
-          New invoice
+          New Invoice
         </Link>
       </nav>
     </header>
