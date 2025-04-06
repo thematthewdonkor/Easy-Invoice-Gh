@@ -46,20 +46,12 @@ export const NewInvoice = () => {
 
   // Handle invoice creation
   const handleSubmitInvoice = async () => {
-    try {
-      const invoiceData = await createInvoice(createMutation.mutateAsync);
+    const invoiceData = await createInvoice(createMutation.mutateAsync);
 
-      if (invoiceData?.id) {
-        resetInvoice();
-        router.push(`/invoice/preview/${invoiceData.id}`);
-        toast.success("Invoice created successfully");
-      } else {
-        console.error("Invoice creation failed");
-        toast.error("Please provide the required field");
-      }
-    } catch (error) {
-      toast.error("Provide required field or Sign up");
-      return error;
+    if (invoiceData?.id) {
+      resetInvoice();
+      router.push(`/invoice/preview/${invoiceData.id}`);
+      toast.success("Invoice created successfully");
     }
   };
 
